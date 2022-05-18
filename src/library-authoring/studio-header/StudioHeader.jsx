@@ -18,39 +18,44 @@ ensureConfig([
 ], 'Library header');
 
 const StudioHeader = ({ intl, library }) => {
-  const mainMenu = [
+  const mainMenu = library && [
     {
       type: 'item',
-      href: ROUTES.Detail.EDIT_SLUG(library.id),
-      content: intl.formatMessage(messages['library.header.settings.details']),
+      href: library.url,
+      content: library.title,
     },
-    {
-      type: 'item',
-      href: ROUTES.Detail.ACCESS_SLUG(library.id),
-      content: intl.formatMessage(messages['library.header.settings.access']),
-    },
-    {
-      type: 'item',
-      href: ROUTES.Detail.IMPORT_SLUG(library.id),
-      content: intl.formatMessage(messages['library.header.settings.import']),
-    },
-  ];
-  // const appMenu = {
-  //   content: PropTypes.string,
-  //   href: PropTypes.string,
-  //   menuItems: [
-  //     {
-  //       type: PropTypes.string,
-  //       href: PropTypes.string,
-  //       content: PropTypes.string,
-  //     },
-  //   ],
-  // };
+  ] || [];
+  const appMenu = library && {
+    content: intl.formatMessage(messages['library.header.settings.menu']),
+    href: "",
+    menuItems: [
+      {
+        type: 'item',
+        href: ROUTES.Detail.EDIT_SLUG(library.id),
+        content: intl.formatMessage(messages['library.header.settings.details']),
+      },
+      {
+        type: 'item',
+        href: ROUTES.Detail.ACCESS_SLUG(library.id),
+        content: intl.formatMessage(messages['library.header.settings.access']),
+      },
+      {
+        type: 'item',
+        href: ROUTES.Detail.IMPORT_SLUG(library.id),
+        content: intl.formatMessage(messages['library.header.settings.import']),
+      },
+    ],
+  } || {
+    content: "",
+    hfref: "",
+    menuItems: [],
+  };
+
   return (
     <StudioHeaderComponent
       intl={intl}
       mainMenu={mainMenu}
-      // appMenu={appMenu}
+      appMenu={appMenu}
     />
   );
 };
